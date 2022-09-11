@@ -30,6 +30,9 @@ const Header = ({type}) => {
       }
     })
   }
+  const pluralize = (count, noun, suffix = 's') =>
+    `${count} ${noun}${count !== 1 ? suffix : ''}`;
+
   return (
     <div className="header">
       <div className={type === "list" ? "headerContainer listMode" : "headerContainer"}>
@@ -84,11 +87,11 @@ const Header = ({type}) => {
               <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faPerson} className="headerIcon"/>
                 <span onClick={() => setOpenOptions(!openOptions)} className="headerSearchText">
-              {`${options.adult} adult ⋅ ${options.children} children ⋅ ${options.room} room`}
+              {`${pluralize(options.adult, 'adult')} ⋅ ${pluralize(options.children, 'child','ren')} ⋅ ${pluralize(options.room, 'room')}`}
             </span>
                 {openOptions && <div className="options">
                   <div className="optionItem">
-                    <span className="optionText">Adult</span>
+                    <span className="optionText">Adults</span>
                     <div className="optionCounter">
                       <button disabled={options.adult <= 1} className="optionCounterButton"
                               onClick={() => handleOption("adult", "d")}>-
@@ -108,7 +111,7 @@ const Header = ({type}) => {
                     </div>
                   </div>
                   <div className="optionItem">
-                    <span className="optionText">Room</span>
+                    <span className="optionText">Rooms</span>
                     <div className="optionCounter">
                       <button disabled={options.room <= 1} className="optionCounterButton"
                               onClick={() => handleOption("room", "d")}>-
